@@ -16,8 +16,6 @@
 
 <p><strong><span style="font-size: medium; color: #ff6600;">Customization:</span></strong></p>
 <p>* No extra skills are required for customization <br /> * Easy change design and simply edit CSS and PHTML when editing template<br /> * Edit list.phtml for categories, view.phtml for products to create a custom look<br /> * No Magento core files modification</p>
-<p><strong><span style="font-size: medium; color: #ff6600;">Support:</span></strong></p>
-<p>* Email support for our clients<br /> * Free upgrades at least in current version branch</p>
 
 <p><span style="font-size: medium; color: #ff6600;"><strong>How it looks:</strong></span></p>
 <p><img src="http://magazento.com/promo/lookbook/Screenshot-1.png" alt="" width="900" /></p>
