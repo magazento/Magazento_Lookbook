@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <lookbook_adminhtml_lookbook_index>
+        
+        <reference name="content">
+            <block type="lookbook/adminhtml_lookbook" name="lookbook" />
+        </reference>
+    </lookbook_adminhtml_lookbook_index>
+    <lookbook_adminhtml_lookbook_edit>
+        <update handle="editor"/>
+        <reference name="head">
+            <action method="setCanLoadExtJs">
+                <flag>1</flag>
+            </action>
+            <action method="addJs">
+                <script>magazento_lookbook/adminhtml/product.js</script>
+            </action>
+            <action method="addJs">
+                <script>magazento_lookbook/adminhtml/friendly_url.js</script>
+            </action>
+            <action method="addJs">
+                <script>magazento_lookbook/adminhtml/jsuploader.js</script>
+            </action>
+            <action method="addJs">
+                <script>magazento_lookbook/adminhtml/uploader.js</script>
+            </action>
+        </reference>
+    </lookbook_adminhtml_lookbook_edit>
+    <lookbook_adminhtml_lookbook_products>
+        <block type="core/text_list" name="root" output="toHtml"> 
+            <block type="lookbook/adminhtml_lookbook_edit_tab_products" name="products.grid"/>
+            <block type="adminhtml/widget_grid_serializer" name="products_grid_serializer">
+                <reference name="products_grid_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>products.grid</grid_block_name>
+                        <data_callback>getSelectedProducts</data_callback>
+                        <hidden_input_name>links[prodlist]</hidden_input_name>
+                        <reload_param_name>products_prodlist</reload_param_name>
+                    </action>
+                    <action method="addColumnInputName">
+                        <input_name>sort_order</input_name>
+                    </action>
+                </reference>
+            </block>
+        </block> 
+    </lookbook_adminhtml_lookbook_products>
+
+    <lookbook_adminhtml_lookbook_productsgrid>
+        <block type="core/text_list" name="root" output="toHtml"> 
+            <block type="lookbook/adminhtml_lookbook_edit_tab_products" name="products.grid"/>
+        </block> 
+    </lookbook_adminhtml_lookbook_productsgrid>
+    <lookbook_adminhtml_lookbook_gallery>
+        <reference name="head">
+            <action method="setCanLoadExtJs">
+                <flag>1</flag>
+            </action>
+        </reference>
+        <block type="core/text_list" name="root" output="toHtml"> 
+            <block type="lookbook/adminhtml_lookbook_edit_tab_gallery" name="gallery"/>
+        </block> 
+    </lookbook_adminhtml_lookbook_gallery>
+    
+</layout>

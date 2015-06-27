@@ -1,0 +1,13 @@
+<?php
+/**
+ * Lookbook view template
+ *
+ * @see Mage_Catalog_Block_Category_View
+ */
+?>
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::getStoreConfig('lookbook/blocks/top'))->toHtml() ?>
+        
+<?php echo $this->getProductListHtml() ?>
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::getStoreConfig('lookbook/blocks/bottom'))->toHtml() ?>
+
+

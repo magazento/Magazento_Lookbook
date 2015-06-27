@@ -1,0 +1,108 @@
+/* 
+    Document   : magazento_lookbook
+    Created on : 08.05.2013, 2:42:23
+    Author     : kurisu
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.product-view .product-shop{
+    margin-left: 25px;
+}
+
+.product{
+    margin-bottom: 10px;
+ 
+}
+input.input-text{
+    height: 18px;
+}
+.products-grid li.item {
+    padding: 0 1.5em;
+}
+.lookbook .products-grid img{
+    width: 300px;
+}
+.flexslider{
+    float: left;
+}
+.lookbook_products{
+    float:right;
+    width:60%;
+   
+}
+.lookbook_slider{
+    width: 39%;
+    float: left;
+}
+/* slider container */
+.iosSlider {
+	/* required */
+	position: relative;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	width: 100%;
+	height:550px;
+}
+
+/* slider */
+.iosSlider .slider {
+	/* required */
+	width: 100%;
+	height: 100%;
+}
+
+/* slide */
+.iosSlider .slider .item {
+	/* required */
+	float: left;
+	height: 500px;
+}
+/*.product-view .product-img-box .product-image-zoom img {
+    width: 100%;
+}*/
+/*.product-view .product-img-box img {
+    width: 100%;
+}*/
+.product-view .product-img-box .product-image-zoom
+{
+    width:100%;
+}
+.product-view .product-img-box 
+{
+    width:100%;
+}
+.product-view .product-img-box{
+    width:30%;
+}
+.col1-layout .product-view .product-shop {
+    float: right;
+    width: 60%;
+}
+.product-essential {
+    background: none;
+}
+.lookbook .product-image img{
+    width: 100%;
+}
+.lookbook .item {
+    float:left;
+    margin: 1%;
+    width: 30%;
+}
+.lookbook .row{
+    clear:both;
+}
+.product-view .product-img-box .zoom .handle {
+    background: url("images/magnifier_handle.gif") no-repeat scroll 0 0 transparent;
+    height: 22px;
+    left: 0;
+    position: absolute;
+    top: -1px;
+    width: 9px;
+}
+.product-view .product-img-box .zoom .track {
+    height: 18px;
+    position: relative;
+}

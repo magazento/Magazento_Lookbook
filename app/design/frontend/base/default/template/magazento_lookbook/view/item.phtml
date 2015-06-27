@@ -1,0 +1,252 @@
+<script src="<?php echo $this->getSkinUrl('magazento_lookbook/js/jquery.flexslider.js') ?>" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery(window).load(function() {
+        jQuery('.flexslider').flexslider();
+    });
+</script>
+<?php $_look = $this->getLook(); ?>
+<div class='lookbook title'><h2><?php echo $_look->getTitle(); ?></h2></div>
+<div class="lookbook_slider">
+    <div class="flexslider">
+        <ul class="slides">
+            <?php foreach ($_look->getData('image') as $value): ?>
+                <li><img src="<?php echo Mage::getBaseUrl('media') . DS . 'lookbook' . DS . $value['file'] ?>" title='<?php echo $value['label'] ?>' /></li>
+            <?php endforeach; ?>
+        </ul>
+
+    </div>
+    <div class="lookbook_descr">
+        <?php echo $_look->getDescr(); ?>
+    </div>
+</div>
+<div class='lookbook_products'>
+    <script type="text/javascript">
+        var spConfig = new Array();
+        var optionsPrice = new Array();
+        var Config = new Array();
+        var opConfig = new Array();
+    </script>
+    <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>    
+    <?php foreach ($_look->getProducts() as $_product): ?>
+        <div class="product">
+            <?php $this->setProduct($_product); ?>
+            <?php $_helper = $this->helper('catalog/output'); ?>
+            <?php $_product = $this->getProduct(); ?>
+
+            <script type="text/javascript">
+                optionsPrice[<?php echo $_product->getId(); ?>] = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+            </script>
+            <div class="product-view">
+                <div class="product-essential">
+                    <div class="<?php echo $leftcol . ' ' . $productpage_pagelayout; ?> alpha product-img-box">
+                        <?php $this->getChild('media')->setData('product', $_product);
+
+                          echo $this->getChildHtml('media', false); 
+                        ?>
+                    </div>
+
+                    <div class="<?php echo $rightcol; ?> <?php
+                         if ($productpage_pagelayout == 'productpage_extralarge') {
+                             echo 'alpha ';
+                         }
+                         ?>omega product-shop">
+
+                            <?php if ($this->getChildHtml('product_custom_2')): ?>
+                            <div class="<?php echo $rightcol_inner; ?> alpha">
+    <?php endif; ?>
+
+    <?php if ((($_product->isSaleable() && $this->hasOptions())) or !($_product->isSaleable() && $this->hasOptions())): ?>
+                                <form class="product_addtocart_form" action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form_<?php echo $_product->getId(); ?>"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+                                    <div class="no-display">
+                                        <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+                                        <input type="hidden" name="related_product" id="related-products-field" value="" />
+                                    </div>
+    <?php endif; ?>
+                                <div class="product-name">
+                                    <h2><a href="<?php echo $_product->getProductUrl() ?>"> <?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
+                                </div>
+
+
+                                <div class="product-box">
+                                    <?php echo $this->getReviewsSummaryHtml($_product, false, true) ?>
+                                    <?php $this->getChild('product_type_data')->setData('product', $_product);
+                                    echo $this->getChildHtml('product_type_data', false); ?>
+                                    <?php //echo $this->getPriceHtml($_product) ?>
+                                    <?php echo $this->getTierPriceHtml(); ?>
+                                    <?php if ($_product->isAvailable()): ?>
+                                        <p class="availability in-stock"><span><?php echo $this->__('In stock') ?></span></p>
+    <?php else: ?>
+                                        <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                                <?php endif; ?>
+                                    <div class="clear"></div>
+
+                                    <div class="clear"></div>
+                                </div>
+                                <?php
+                                $this->getChild('alert_urls')->setData('product', $_product);
+                                echo $this->getChildHtml('alert_urls', false)
+                                ?>
+
+                                <?php
+                                $optionsAvailability = false;
+                                if ($_product->isSaleable() && $this->hasOptions()) {
+                                    $optionsAvailability = true;
+                                }
+                                ?>
+
+                                    <?php if ($_product->getShortDescription()): ?>
+                                    <div class="short-description">
+                                        <div class="std"><h2><?php echo $this->__('Details:') ?></h2><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
+<!--                                    <div class="bundled-price">
+                                    <?php echo $this->getChildHtml('product_type_data'); ?>
+                                    </div>-->
+                                    <?php
+                                    $this->getChild('product_options_wrapper')->setData('product', $_product);
+                                    echo $this->getChildHtml('product_options_wrapper', false);
+
+                                    $this->getChild('product_options_wrapper_bottom')->setData('product', $_product);
+                                    echo $this->getChildHtml('product_options_wrapper_bottom', false);
+                                    ?>
+    <?php endif; ?>
+
+                                            <?php echo $this->getChildHtml('extrahint') ?>
+
+
+                                            <?php if (!$this->hasOptions()): ?>
+                                    <div class="product-type-block">
+                                        <div class="indent">
+                                            <div class="add-to-box">
+                                            <?php if ($_product->isSaleable()): ?>
+                                                <?php
+                                                $this->getChild('addtocart')->setData('product', $_product);
+                                                echo $this->getChildHtml('addtocart', false)
+                                                ?>
+        <?php endif; ?>
+                                            </div>
+                                    <?php echo $this->getChildHtml('extra_buttons') ?>
+                                    <?php echo $this->getChildHtml('addto') ?>
+                                    <?php if ($this->canEmailToFriend()): ?>
+                                                <p class="email-friend"><span></span><a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>"><?php echo $this->__('Email to a Friend') ?></a></p>
+                                    <?php endif; ?>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php echo $this->getChildHtml('other'); ?>
+
+                                <?php
+                                // Predefined Static Block
+                                if ($static_html = $this->getChildHtml('product_custom')):
+                                    echo '<div class="product-custom">' . $static_html . '</div>';
+                                endif;
+                                ?>
+
+                            <?php echo $this->getTierprHtml() ?>
+
+
+                        <?php if ((($_product->isSaleable() && $this->hasOptions())) or !($_product->isSaleable() && $this->hasOptions())): ?>
+                                </form>
+                            <?php endif; ?>
+
+                            <?php if ($this->getChildHtml('product_custom_2')): ?>
+                            </div>
+                            <?php endif; ?>
+
+                            <?php if ($this->getChildHtml('product_custom_2')): ?>
+                            <div class="<?php echo $rightcol_inner2; ?> omega">
+                            <?php
+                            // Predefined Static Block
+                            if ($static_html = $this->getChildHtml('product_custom_2')):
+                                echo '<div class="product-custom-2">' . $static_html . '</div>';
+                            endif;
+                            ?>
+                            </div>
+    <?php endif; ?>
+
+                    </div>
+
+
+                    <script type="text/javascript">
+                        //<![CDATA[
+
+                        var productAddToCartForm_<?php echo $_product->getId(); ?> = new VarienForm('product_addtocart_form_<?php echo $_product->getId(); ?>');
+                        productAddToCartForm_<?php echo $_product->getId(); ?>.submit = function(button, url) {
+                            if (this.validator.validate()) {
+                                var form = this.form;
+                                var oldUrl = form.action;
+                                
+                                form.qty_<?php echo $_product->getId()?>.id = 'qty';
+                                form.qty_<?php echo $_product->getId()?>.name = 'qty';
+                                var classname = 'select.super-attribute-select-<?php echo $_product->getId()?>';
+                                $$(classname).each(function(d){
+                                   // replace(/[a-z]*_[0-9]*[a-z]*/, '');
+                                    var name = d.name.replace(/(_[0-9]+)/, '');
+                                    d.name = d.name.replace(/(_[0-9]+)/, '');
+                                      
+                                        });;
+                               
+//                                form.super_attribute_<?php echo $_product->getId()?>.id = 'super_attribute';
+//                                form.super_attribute_<?php echo $_product->getId()?>.name = 'super_attribute';
+                                
+                                if (url) {
+                                    form.action = url;
+                                }
+                                var e = null;
+                                try {
+                                    this.form.submit();
+                                } catch (e) {
+                                }
+                                this.form.action = oldUrl;
+                                if (e) {
+                                    throw e;
+                                }
+
+                                if (button && button != 'undefined') {
+                                    button.disabled = true;
+                                }
+
+                            }
+                        }.bind(productAddToCartForm_<?php echo $_product->getId() ?>);
+
+                        productAddToCartForm_<?php echo $_product->getId() ?>.submitLight = function(button, url) {
+                            if (this.validator) {
+                                var nv = Validation.methods;
+                                delete Validation.methods['required-entry'];
+                                delete Validation.methods['validate-one-required'];
+                                delete Validation.methods['validate-one-required-by-name'];
+                                if (this.validator.validate()) {
+                                    if (url) {
+                                        this.form.action = url;
+                                    }
+                                    this.form.submit();
+                                }
+                                Object.extend(Validation.methods, nv);
+                            }
+                        }.bind(productAddToCartForm_<?php echo $_product->getId() ?>);
+                        //]]>
+                    </script>
+                </div>
+
+                <?php
+                // Predefined Static Block
+                if ($static_html = $this->getChildHtml('above_product_collateral')):
+                    echo '<div class="above-product-collateral">' . $static_html . '</div>';
+                endif;
+                ?>
+
+    <?php
+    // Predefined Static Block
+    if ($static_html = $this->getChildHtml('product_banners')):
+        echo '<div class="product-banners">' . $static_html . '</div>';
+    endif;
+    ?>
+
+            </div>
+        </div> 
+<?php endforeach; ?>
+</div>
