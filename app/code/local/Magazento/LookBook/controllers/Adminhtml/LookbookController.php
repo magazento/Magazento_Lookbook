@@ -85,7 +85,7 @@ class Magazento_LookBook_Adminhtml_LookbookController extends Mage_Adminhtml_Con
                     /* Starting upload */
                     $uploader = new Varien_File_Uploader('image');
 
-                    // Any extention would work
+                    // Any extension would work
                     $uploader->setAllowedExtensions(array('jpg', 'jpeg', 'gif', 'png'));
                     $uploader->setAllowRenameFiles(false);
 

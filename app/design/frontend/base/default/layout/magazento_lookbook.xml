@@ -131,7 +131,7 @@
         </reference>
     </lookbook_index_view>
     <!--
-    Additional block dependant on product type
+    Additional block dependent on product type
     -->
 <!--    <PRODUCT_TYPE_simple translate="label" module="lookbook">
         <label>Catalog Product View (Simple)</label>
